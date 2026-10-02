@@ -3,6 +3,8 @@ import { syllabus } from "./data";
 import "./App.css";
 
 function App() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const nextQuestion = () => { setCurrentQuestion((prev) => prev + 1); };
   const [page, setPage] = useState("home");
   const [subject, setSubject] = useState(null);
   const [chapter, setChapter] = useState(null);
@@ -327,7 +329,8 @@ function App() {
             <p className="badge">PRACTICE ENGINE</p>
 
             <h1>Test Your Understanding</h1>\n\n            {concept && <p>Score: <strong>{score}</strong></p>}
-            {answer && <div className="learning-card"><h3>{answer === concept.questions[0].answer ? "Correct!" : "Not quite"}</h3><p>{answer === concept.questions[0].answer ? "Excellent. Your answer is correct." : "Review the concept and try again."}</p></div>}
+            {answer && <div className="learning-card"><h3>{answer === concept.questions[currentQuestion].answer ? "Correct!" : "Not quite"}</h3><p>{answer === concept.questions[currentQuestion].answer ? "Excellent. Your answer is correct." : "Review the concept and try again."}</p></div>}
+          <button className="next-question-btn" onClick={nextQuestion}>Next Question</button>
 
             <div className="question-card">
 
@@ -335,17 +338,17 @@ function App() {
 
               <h2>
                 {concept
-                  ? concept.questions[0].question
+                  ? concept.questions[currentQuestion].question
                   : "Choose a concept from the Syllabus Decoder to begin practice."}
               </h2>
 
               {concept &&
-                concept.questions[0].options.map((answer) => (
+                concept.questions[currentQuestion].options.map((answer) => (
 
                   <button
                     className="answer"
                     key={answer}
-                    onClick={() => { setAnswer(answer); if(answer === concept.questions[0].answer) setScore(x => x + 1); else localStorage.setItem("syllabusaurus:mistakes", JSON.stringify([...JSON.parse(localStorage.getItem("syllabusaurus:mistakes") || "[]"), {subject, chapter, concept: concept.name, question: concept.questions[0].question, yourAnswer: answer, correctAnswer: concept.questions[0].answer, date: new Date().toISOString()}])); }}
+                    onClick={() => { setAnswer(answer); if(answer === concept.questions[currentQuestion].answer) setScore(x => x + 1); else localStorage.setItem("syllabusaurus:mistakes", JSON.stringify([...JSON.parse(localStorage.getItem("syllabusaurus:mistakes") || "[]"), {subject, chapter, concept: concept.name, question: concept.questions[currentQuestion].question, yourAnswer: answer, correctAnswer: concept.questions[currentQuestion].answer, date: new Date().toISOString()}])); }}
                   >
                     {answer}
                   </button>
