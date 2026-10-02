@@ -1,0 +1,8 @@
+[1mdiff --git a/src/data.js b/src/data.js[m
+[1mindex 713f7aa..bea05d7 100644[m
+[1m--- a/src/data.js[m
+[1m+++ b/src/data.js[m
+[36m@@ -1 +1 @@[m
+[31m-export const syllabus={Physics:{"Units & Measurements":[{id:"dimensions",name:"Dimensions",difficulty:"Medium",explanation:"Dimensions describe a physical quantity using fundamental quantities.",keyPoints:["Used to check equations.","Expressed using M, L and T."],formula:"Velocity = [LT⁻¹]",mistakes:["Forgetting powers of fundamental quantities."],questions:[{question:"What is the dimensional formula of velocity?",options:["[LT⁻¹]","[LT⁻²]","[MLT⁻¹]","[M⁰L⁰T⁰]"],answer:"[LT⁻¹]"}]}]}};[m
+\ No newline at end of file[m
+[32m+[m[32mexport const syllabus={Physics:{"Units & Measurements":[{id:"dimensions",name:"Dimensions",difficulty:"Medium",explanation:"Dimensions describe a physical quantity using fundamental quantities.",keyPoints:["Used to check equations.","Expressed using M, L and T."],formula:"Velocity = [LT⁻¹]",mistakes:["Forgetting powers of fundamental quantities."],questions:[{question:"What is the dimensional formula of velocity?",options:["[LT⁻¹]","[LT⁻²]","[MLT⁻¹]","[M⁰L⁰T⁰]"],answer:"[LT⁻¹]"},[m
