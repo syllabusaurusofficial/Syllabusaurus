@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 import { syllabus } from "./data";
 
 export default function App() {
@@ -43,16 +44,84 @@ export default function App() {
 
       {page === "home" && (
         <section className="hero">
-          <h1>Syllabusaurus</h1>
-          <p>Syllabus Decoded, Success Delivered.</p>
+  <div className="hero-copy">
+    <div className="hero-badge">THE SMART STUDY PLATFORM</div>
 
-          <button
-            className="primary-btn"
-            onClick={() => setPage("subjects")}
-          >
-            Explore Syllabus
-          </button>
-        </section>
+    <h1>Syllabus Decoded.<br /><span>Success Delivered.</span></h1>
+
+    <p>
+      Turn your syllabus into a clear learning path.
+      Learn concepts, practise questions, track mistakes,
+      and revise at the right time.
+    </p>
+
+    <div className="hero-actions">
+      <button
+        className="primary-btn"
+        onClick={() => setPage("subjects")}
+      >
+        Explore Your Syllabus <span>→</span>
+      </button>
+
+      <button
+        className="secondary-btn"
+        onClick={() => setPage("subjects")}
+      >
+        Start Learning
+      </button>
+    </div>
+
+    <div className="hero-trust">
+      <div><strong>01</strong><span>Syllabus Decoder</span></div>
+      <div><strong>02</strong><span>Practice Engine</span></div>
+      <div><strong>03</strong><span>Mistake Tracker</span></div>
+    </div>
+  </div>
+
+  <div className="hero-visual">
+    <div className="dashboard-window">
+      <div className="dashboard-top">
+        <span className="window-dot"></span>
+        <span className="window-dot"></span>
+        <span className="window-dot"></span>
+        <span className="dashboard-title">Syllabusaurus</span>
+      </div>
+
+      <div className="dashboard-body">
+        <div className="dashboard-label">YOUR LEARNING PATH</div>
+        <h2>Physics</h2>
+
+        <div className="progress-row">
+          <span>Concept Progress</span>
+          <strong>72%</strong>
+        </div>
+
+        <div className="progress-bar">
+          <div></div>
+        </div>
+
+        <div className="dashboard-cards">
+          <div>
+            <small>CHAPTER</small>
+            <strong>Units & Measurements</strong>
+            <span>12 concepts</span>
+          </div>
+
+          <div>
+            <small>NEXT UP</small>
+            <strong>Motion in a Straight Line</strong>
+            <span>Continue learning →</span>
+          </div>
+        </div>
+
+        <div className="dashboard-bottom">
+          <span>Revision status</span>
+          <b>Ready to revise</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       )}
 
       {page === "subjects" && (
