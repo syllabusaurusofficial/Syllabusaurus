@@ -1,83 +1,58 @@
-import { useState } from 'react'
-import { supabase } from './lib/supabase'
+import { useState } from "react";
+import { supabase } from "./lib/supabase";
 
 export default function Auth() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [mode, setMode] = useState('login')
-  const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage('')
+  async function login(e) {
+    e.preventDefault();
+    setMessage("Logging in...");
 
-    const result =
-      mode === 'login'
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password })
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    if (result.error) {
-      setMessage(result.error.message)
+    if (error) {
+      setMessage(error.message);
     } else {
-      setMessage(
-        mode === 'login'
-          ? 'Login successful.'
-          : 'Account created. Check your email if confirmation is required.'
-      )
+      localStorage.setItem("syllabusaurus_logged_in", "true");
+      window.location.href = window.location.origin;
     }
-
-    setLoading(false)
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <h1>Syllabusaurus</h1>
-        <p>{mode === 'login' ? 'Welcome back.' : 'Create your account.'}</p>
+    <div>
+      <h1>Syllabusaurus</h1>
+      <h2>Login</h2>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <form onSubmit={login}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-          />
+        <br /><br />
 
-          <button type="submit" disabled={loading}>
-            {loading
-              ? 'Please wait...'
-              : mode === 'login'
-                ? 'Log In'
-                : 'Create Account'}
-          </button>
-        </form>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        {message && <p>{message}</p>}
+        <br /><br />
 
-        <button
-          type="button"
-          onClick={() => {
-            setMode(mode === 'login' ? 'signup' : 'login')
-            setMessage('')
-          }}
-        >
-          {mode === 'login'
-            ? 'Create a new account'
-            : 'Already have an account? Log in'}
-        </button>
-      </div>
+        <button type="submit">Login</button>
+      </form>
+
+      {message && <p>{message}</p>}
     </div>
-  )
+  );
 }

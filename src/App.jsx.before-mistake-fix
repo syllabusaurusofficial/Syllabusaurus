@@ -12,7 +12,12 @@ function App() {
   const [answer, setAnswer] = useState(null);
   const [score, setScore] = useState(0);
 
-  const openSubject = (name) => {
+  const getChapterNames = (subjectName) =>
+  Object.keys(syllabus[subjectName] || {});
+
+console.log("SYLLAURUS CHAPTERS:", Object.keys(syllabus.Physics || {}));
+
+const openSubject = (name) => {
     setSubject(name);
     setChapter(null);
     setConcept(null);
