@@ -1,0 +1,4 @@
+project_id = "syllabusaurus"
+
+[functions.study-partner]
+verify_jwt = true
