@@ -1,6 +1,7 @@
 import { formulaData } from "./formulas.js";
 import { class11ChemistryFormulas } from "./class11ChemistryFormulas.js";
 import { class11MathematicsFormulas } from "./class11MathematicsFormulas.js";
+import { class12MathematicsFormulas } from "./class12MathematicsFormulas.js";
 import {
   class11PhysicsChapters,
   class11PhysicsContentRecords,
@@ -255,6 +256,37 @@ function buildChemistryRecords(catalog) {
   return records;
 }
 
+function buildClass12MathematicsRecords(catalog) {
+  const records = class12MathematicsFormulas.map((formula) => {
+    const target = catalog.find((entry) =>
+      entry.board === formula.board &&
+      entry.grade === formula.grade &&
+      entry.subject === formula.subject &&
+      entry.section === "" &&
+      entry.chapter === formula.chapter &&
+      entry.chapterOnly
+    );
+    if (!target) {
+      throw new Error(
+        `Class XII Mathematics formula "${formula.id}" references a chapter not found in the loaded CBSE syllabus: ${formula.chapter}.`,
+      );
+    }
+    return createAcademicContentRecord({
+      ...formula,
+      chapterId: target.chapterId,
+      conceptId: target.key,
+    });
+  });
+  const ids = new Set();
+  for (const record of records) {
+    if (ids.has(record.id)) {
+      throw new Error(`Duplicate Class XII Mathematics formula ID: ${record.id}.`);
+    }
+    ids.add(record.id);
+  }
+  return records;
+}
+
 function buildPhysicsChapters(boardName, gradeName, subjectName, records) {
   return class11PhysicsChapters.map((name, index) => {
     const chapterNumber = index + 1;
@@ -396,6 +428,7 @@ export function createAcademicContent(syllabus) {
     ...buildLegacyFormulas(catalog),
     ...buildPhysicsRecords(),
     ...buildChemistryRecords(catalog),
+    ...buildClass12MathematicsRecords(catalog),
   ];
   const boards = syllabus.boards.map((board) => buildBoard(board, catalog, formulas));
   const physicsBoard = boards.find((board) => board.name === "CBSE");
